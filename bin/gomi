@@ -120,7 +120,7 @@ gomi::restore()
 
     # fzf loop
     local out q k res ok
-    while ok=("${ok[@]:-dummy_$RANDOM}"); out=$(
+    while out=$(
         log_list \
             | perl -pe 's/(\d+-\d+-\d+ \d\d:\d\d:\d\d)/\033[33m$1\033[m/' \
             | fzf --ansi --multi --tac --query="$q" --print-query \
@@ -140,8 +140,8 @@ gomi::restore()
                 tmp=(${(pws:\x09:)${(M)arr:#${${(M)res##*:[0-9][0-9] }// /$DELIM}${res##*:[0-9][0-9] }*}})
                 if [[ -d ${tmp[4]} ]]; then
                     {
-                        ls -dl \"${tmp[4]}\"
-                        ls -l \"${tmp[4]}\"
+                        ls -dl ${tmp[4]}
+                        ls -l ${tmp[4]}
                     } | less
                 else
                     LESSOPEN="$lessopen_query" less "${tmp[4]}"
@@ -155,12 +155,7 @@ gomi::restore()
                         echo ${${(M)${arr}:#${i// /$DELIM}*}##*$DELIM}
                     done
                 )")
-                if [[ ${(j: :)ok} == ${(j: :)${(@f)tmp}} ]]; then
-                    command rm -rf "${(@f)tmp}" 2>/dev/null
-                    ok=()
-                else
-                    ok=("${(@f)tmp}")
-                fi
+                command rm -rf "${(@f)tmp}" 2>/dev/null
                 ;;
 
             *)
