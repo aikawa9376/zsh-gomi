@@ -124,7 +124,7 @@ gomi::restore()
         log_list \
             | perl -pe 's/(\d+-\d+-\d+ \d\d:\d\d:\d\d)/\033[33m$1\033[m/' \
             | fzf --ansi --multi --tac --query="$q" --print-query \
-            --no-sort --expect=ctrl-v,ctrl-x,"?" --exit-0 --prompt="gomi> "); do
+            --no-sort --expect=ctrl-v,ctrl-x --exit-0 --prompt="gomi> "); do
         q="$(head -1 <<< "$out")"
         k="$(head -2 <<< "$out" | tail -1)"
         res="$(sed '1,2d;/^$/d' <<< "$out")"
@@ -140,8 +140,8 @@ gomi::restore()
                 tmp=(${(pws:\x09:)${(M)arr:#${${(M)res##*:[0-9][0-9] }// /$DELIM}${res##*:[0-9][0-9] }*}})
                 if [[ -d ${tmp[4]} ]]; then
                     {
-                        ls -dl ${tmp[4]}
-                        ls -l ${tmp[4]}
+                        ls -dl "${tmp[4]}"
+                        ls -l "${tmp[4]}"
                     } | less
                 else
                     LESSOPEN="$lessopen_query" less "${tmp[4]}"
