@@ -257,14 +257,17 @@ case "$1" in
         shift; gomi::system "$@"
         ;;
 
+    -l|--log)
+        bat $GOMI_LOG
+        ;;
+
     -*|--*)
         echo "$1: unknown option" >&2
         exit 1
         ;;
 
     "")
-        echo "gomi: too few arguments" >&2
-        exit 1
+        gomi::restore
         ;;
 
     *)
