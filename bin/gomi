@@ -3,6 +3,7 @@
 GOMI_DIR=${GOMI_DIR:-~/.gomi}
 GOMI_BOX="$GOMI_DIR/$(date +%Y/%m/%d)"
 GOMI_LOG="$GOMI_DIR/log"
+GOMI_BK="$GOMI_DIR/bk"
 
 # delimiter
 DELIM=$'\t'
@@ -39,6 +40,7 @@ gomi::init()
     [[ -d $GOMI_DIR ]] || mkdir -p "$GOMI_DIR"
     [[ -f $GOMI_LOG ]] || touch "$GOMI_LOG"
     [[ -d $GOMI_BOX ]] || mkdir -p "$GOMI_BOX"
+    [[ -d $GOMI_BK ]] || mkdir -p "$GOMI_BK"
 }
 
 gomi::system()
@@ -150,6 +152,16 @@ gomi::restore()
                     done
                 )")
                 command rm -rf "${(@f)tmp}" 2>/dev/null
+                ;;
+
+            alt-x )
+                tmp=("$(
+                    for i in ${(@f)res}
+                    do
+                        echo ${${(M)${arr}:#${i// /$DELIM}*}##*$DELIM}
+                    done
+                )")
+                command mv "${(@f)tmp}" "$GOMI_BK" 2>/dev/null
                 ;;
 
             *)
