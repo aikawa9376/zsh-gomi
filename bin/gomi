@@ -140,7 +140,7 @@ gomi::restore()
                         ls -l --color=always "${tmp[4]}"
                     } | less -r
                 else
-                    LESSOPEN="$lessopen_query" less "${tmp[4]}"
+                    LESSOPEN="$lessopen_query" less -r "${tmp[4]}"
                 fi
                 ;;
 
