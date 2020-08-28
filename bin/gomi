@@ -147,7 +147,7 @@ gomi::restore()
             ctrl-x)
                 for i in ${(@f)res}
                 do
-                  for_grep="$(perl -pe 's/^(\d+-\d+-\d+) (\d+:\d+:\d+) (\/.+)$/$1\t$2\t$3/' <<<"$i")"
+                  for_grep="$(perl -pe 's/^(\d+-\d+-\d+) (\d+:\d+:\d+) (\/.+)$/$1\t$2\t$3\t/' <<<"$i")"
                   echo $for_grep
                   src="$(echo  "${(F)arr}" | command grep "^$for_grep" | cut -f3- | cut -f2)"
                   echo $src
