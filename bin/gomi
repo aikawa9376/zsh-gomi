@@ -149,7 +149,9 @@ gomi::restore()
                 do
                   for_grep="$(perl -pe 's/^(\d+-\d+-\d+) (\d+:\d+:\d+) (\/.+)$/$1\t$2\t$3/' <<<"$i")"
                   src="$(echo  "${(F)arr}" | command grep "^$for_grep" | cut -f3- | cut -f2)"
-                  command rm -rf "$src" 2>/dev/null
+                  command rm -rf "$src"
+                  ret=1
+                  return $ret
                 done
                 ;;
 
